@@ -1,0 +1,8 @@
+bin
+obj
+Execute
+*.suo
+*.pidb
+*.userprefs
+*.bak
+*.orig
