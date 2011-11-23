@@ -101,9 +101,14 @@ namespace org.vxwo.JsonCsharp
             return store as List<JsonValue>;
         }
 
-        public int Count()
+        public int Count
         {
-            return EnsureArray().Count;
+            get
+            {
+                if (type != JsonType.Array)
+                    return 0;
+                return EnsureArray().Count;
+            }
         }
 
         public JsonValue GetAt(int index)
