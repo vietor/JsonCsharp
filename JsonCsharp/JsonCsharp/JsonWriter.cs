@@ -45,13 +45,13 @@ namespace org.vxwo.csharp.json
                     _output.Append(((bool)obj.store) ? "true" : "false");
                     break;
                 case JsonType.Int:
-                    _output.Append(Convert.ToSingle((int)obj.store));
+                    _output.Append(Convert.ToString((int)obj.store));
                     break;
                 case JsonType.Long:
-                    _output.Append(Convert.ToSingle((long)obj.store));
+                    _output.Append(Convert.ToString((long)obj.store));
                     break;
                 case JsonType.Double:
-                    _output.Append(Convert.ToSingle((double)obj.store));
+                    _output.Append(Convert.ToString((double)obj.store));
                     break;
                 case JsonType.String:
                     WriteString((string)obj.store);
