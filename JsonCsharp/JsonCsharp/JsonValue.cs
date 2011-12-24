@@ -95,9 +95,14 @@ namespace org.vxwo.csharp.json
             return store as List<JsonValue>;
         }
 
-        public int Count()
+        public int Count
         {
-            return EnsureArray().Count;
+            get
+            {
+                if (type != JsonType.Array)
+                    return 0;
+                return EnsureArray().Count;
+            }
         }
 
         public JsonValue GetAt(int index)
@@ -138,27 +143,27 @@ namespace org.vxwo.csharp.json
 
         public bool AsBoolean()
         {
-            return (bool)store;
+            return IsString() ? bool.Parse((string)store) : (bool)store;
         }
 
         public int AsInt()
         {
-            return (int)store;
+            return IsString() ? int.Parse((string)store) : (int)store;
         }
 
         public long AsLong()
         {
-            return (long)store;
+            return IsString() ? long.Parse((string)store) : (long)store;
         }
 
         public double AsDouble()
         {
-            return (double)store;
+            return IsString() ? double.Parse((string)store) : (double)store;
         }
 
         public string AsString()
         {
-            return (string)store;
+            return IsString() ? (string)store : Convert.ToString(store);
         }
 
         public static implicit operator JsonValue(bool value)
