@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 
-namespace org.vxwo.JsonCsharp
+namespace org.vxwo.csharp.json
 {
     public class JsonWriter
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace org.vxwo.JsonCsharp
+namespace org.vxwo.csharp.json
 {
     internal enum JsonType
     {
@@ -38,8 +38,6 @@ namespace org.vxwo.JsonCsharp
             type = JsonType.None;
             store = null;
         }
-
-        #region Object Methods
 
         private Dictionary<string, JsonValue> EnsureObject()
         {
@@ -84,10 +82,6 @@ namespace org.vxwo.JsonCsharp
             EnsureObject().Remove(name);
         }
 
-        #endregion
-
-        #region Array Methods
-
         private List<JsonValue> EnsureArray()
         {
             if (type != JsonType.None && type != JsonType.Array)
@@ -116,10 +110,6 @@ namespace org.vxwo.JsonCsharp
             EnsureArray().Add(value);
             return this;
         }
-
-        #endregion
-
-        #region Read Methods
 
         public bool IsBoolean()
         {
@@ -171,10 +161,6 @@ namespace org.vxwo.JsonCsharp
             return (string)store;
         }
 
-        #endregion
-
-        #region operator Methods
-
         public static implicit operator JsonValue(bool value)
         {
             return new JsonValue(JsonType.Boolean, value);
@@ -199,8 +185,6 @@ namespace org.vxwo.JsonCsharp
         {
             return new JsonValue(JsonType.String, value);
         }
-
-        #endregion
 
     }
 }
