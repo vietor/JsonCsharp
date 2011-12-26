@@ -143,22 +143,62 @@ namespace org.vxwo.csharp.json
 
         public bool AsBoolean()
         {
-            return IsString() ? bool.Parse((string)store) : (bool)store;
+            bool value = false;
+            if (IsBoolean())
+                value = (bool)store;
+            else if (IsString())
+                value = bool.Parse((string)store);
+            else
+                throw new Exception("JsonValue cannot convert to a bool");
+            return value;
         }
 
         public int AsInt()
         {
-            return IsString() ? int.Parse((string)store) : (int)store;
+            int value = 0;
+            if (IsInt())
+                value = (int)store;
+            else if (IsString())
+                value = int.Parse((string)store);
+            else if (IsLong())
+                value = (int)(long)store;
+            else if (IsDouble())
+                value = (int)(double)store;
+            else
+                throw new Exception("JsonValue cannot convert to a int");
+            return value;
         }
 
         public long AsLong()
         {
-            return IsString() ? long.Parse((string)store) : (long)store;
+            long value = 0;
+            if (IsLong())
+                value = (long)store;
+            else if (IsString())
+                value = long.Parse((string)store);
+            else if (IsInt())
+                value = (long)(int)store;
+            else if (IsDouble())
+                value = (long)(double)store;
+            else
+                throw new Exception("JsonValue cannot convert to a long");
+            return value;
         }
 
         public double AsDouble()
         {
-            return IsString() ? double.Parse((string)store) : (double)store;
+            double value = 0;
+            if (IsDouble())
+                value = (double)store;
+            else if (IsString())
+                value = double.Parse((string)store);
+            else if (IsInt())
+                value = (double)(int)store;
+            else if (IsLong())
+                value = (double)(long)store;
+            else
+                throw new Exception("JsonValue cannot convert to a double");
+            return value;
         }
 
         public string AsString()
