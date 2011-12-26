@@ -15,22 +15,22 @@ namespace org.vxwo.csharp.json
 
     internal class JsonSerializer
     {
-        private readonly StringBuilder _output = new StringBuilder();
-        readonly bool serializeNulls = true;
-        readonly int _MAX_DEPTH = 10;
-        bool _Indent = false;
-        int _current_depth = 0;
+        private StringBuilder output = new StringBuilder();
+        private bool serializeNulls = true;
+        private const int MAX_DEPTH = 10;
+        private bool indentOutput = false;
+        private int currentDepth = 0;
 
         internal JsonSerializer(bool SerializeNulls, bool IndentOutput)
         {
-            _Indent = IndentOutput;
+            this.indentOutput = IndentOutput;
             this.serializeNulls = SerializeNulls;
         }
 
         internal string ConvertToJSON(JsonValue obj)
         {
             WriteValue(obj);
-            return _output.ToString();
+            return output.ToString();
         }
 
         private void WriteValue(JsonValue obj)
@@ -39,19 +39,19 @@ namespace org.vxwo.csharp.json
             {
                 case JsonType.None:
                 case JsonType.Null:
-                    _output.Append("null");
+                    output.Append("null");
                     break;
                 case JsonType.Boolean:
-                    _output.Append(((bool)obj.store) ? "true" : "false");
+                    output.Append(((bool)obj.store) ? "true" : "false");
                     break;
                 case JsonType.Int:
-                    _output.Append(Convert.ToString((int)obj.store));
+                    output.Append(Convert.ToString((int)obj.store));
                     break;
                 case JsonType.Long:
-                    _output.Append(Convert.ToString((long)obj.store));
+                    output.Append(Convert.ToString((long)obj.store));
                     break;
                 case JsonType.Double:
-                    _output.Append(Convert.ToString((double)obj.store));
+                    output.Append(Convert.ToString((double)obj.store));
                     break;
                 case JsonType.String:
                     WriteString((string)obj.store);
@@ -68,16 +68,16 @@ namespace org.vxwo.csharp.json
         private void WriteObject(JsonValue obj)
         {
             Indent();
-            _current_depth++;
-            if (_current_depth > _MAX_DEPTH)
-                throw new Exception("Serializer encountered maximum depth of " + _MAX_DEPTH);
-            _output.Append('{');
+            currentDepth++;
+            if (currentDepth > MAX_DEPTH)
+                throw new Exception("Serializer encountered maximum depth of " + MAX_DEPTH);
+            output.Append('{');
 
             bool append = false;
             foreach (KeyValuePair<string, JsonValue> kv in obj.store as Dictionary<string, JsonValue>)
             {
                 if (append)
-                    _output.Append(',');
+                    output.Append(',');
 
                 if (kv.Value.type == JsonType.None || (kv.Value.type == JsonType.Null && serializeNulls == false))
                     append = false;
@@ -88,25 +88,25 @@ namespace org.vxwo.csharp.json
                 }
             }
 
-            _current_depth--;
+            currentDepth--;
             Indent();
-            _output.Append('}');
-            _current_depth--;
+            output.Append('}');
+            currentDepth--;
         }
 
         private void WriteArray(JsonValue obj)
         {
             Indent();
-            _current_depth++;
-            if (_current_depth > _MAX_DEPTH)
-                throw new Exception("Serializer encountered maximum depth of " + _MAX_DEPTH);
-            _output.Append('[');
+            currentDepth++;
+            if (currentDepth > MAX_DEPTH)
+                throw new Exception("Serializer encountered maximum depth of " + MAX_DEPTH);
+            output.Append('[');
 
             bool append = false;
             foreach (JsonValue v in obj.store as List<JsonValue>)
             {
                 if (append)
-                    _output.Append(',');
+                    output.Append(',');
 
                 if (v.type == JsonType.None || (v.type == JsonType.Null && serializeNulls == false))
                     append = false;
@@ -117,10 +117,10 @@ namespace org.vxwo.csharp.json
                 }
             }
 
-            _current_depth--;
+            currentDepth--;
             Indent();
-            _output.Append(']');
-            _current_depth--;
+            output.Append(']');
+            currentDepth--;
         }
 
         private void Indent()
@@ -130,11 +130,11 @@ namespace org.vxwo.csharp.json
 
         private void Indent(bool dec)
         {
-            if (_Indent)
+            if (indentOutput)
             {
-                _output.Append("\r\n");
-                for (int i = 0; i < _current_depth - (dec ? 1 : 0); i++)
-                    _output.Append("\t");
+                output.Append("\r\n");
+                for (int i = 0; i < currentDepth - (dec ? 1 : 0); i++)
+                    output.Append("\t");
             }
         }
 
@@ -145,7 +145,7 @@ namespace org.vxwo.csharp.json
             Indent();
             WriteStringFast(name);
 
-            _output.Append(':');
+            output.Append(':');
 
             WriteStringFast(value);
         }
@@ -157,21 +157,21 @@ namespace org.vxwo.csharp.json
             Indent();
             WriteStringFast(name);
 
-            _output.Append(':');
+            output.Append(':');
 
             WriteValue(value);
         }
 
         private void WriteStringFast(string s)
         {
-            _output.Append('\"');
-            _output.Append(s);
-            _output.Append('\"');
+            output.Append('\"');
+            output.Append(s);
+            output.Append('\"');
         }
 
         private void WriteString(string s)
         {
-            _output.Append('\"');
+            output.Append('\"');
 
             int runIndex = -1;
 
@@ -191,30 +191,30 @@ namespace org.vxwo.csharp.json
 
                 if (runIndex != -1)
                 {
-                    _output.Append(s, runIndex, index - runIndex);
+                    output.Append(s, runIndex, index - runIndex);
                     runIndex = -1;
                 }
 
                 switch (c)
                 {
-                    case '\t': _output.Append("\\t"); break;
-                    case '\r': _output.Append("\\r"); break;
-                    case '\n': _output.Append("\\n"); break;
+                    case '\t': output.Append("\\t"); break;
+                    case '\r': output.Append("\\r"); break;
+                    case '\n': output.Append("\\n"); break;
                     case '"':
-                    case '\\': _output.Append('\\'); _output.Append(c); break;
+                    case '\\': output.Append('\\'); output.Append(c); break;
                     default:
-                        _output.Append("\\u");
-                        _output.Append(((int)c).ToString("X4", NumberFormatInfo.InvariantInfo));
+                        output.Append("\\u");
+                        output.Append(((int)c).ToString("X4", NumberFormatInfo.InvariantInfo));
                         break;
                 }
             }
 
             if (runIndex != -1)
             {
-                _output.Append(s, runIndex, s.Length - runIndex);
+                output.Append(s, runIndex, s.Length - runIndex);
             }
 
-            _output.Append('\"');
+            output.Append('\"');
         }
     }
 }

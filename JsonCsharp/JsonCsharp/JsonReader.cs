@@ -29,10 +29,10 @@ namespace org.vxwo.csharp.json
             Null
         }
 
-        readonly char[] json;
-        readonly StringBuilder s = new StringBuilder();
-        Token lookAheadToken = Token.None;
-        int index;
+        private char[] json;
+        private StringBuilder s = new StringBuilder();
+        private Token lookAheadToken = Token.None;
+        private int index;
 
         internal JsonParser(string json)
         {
