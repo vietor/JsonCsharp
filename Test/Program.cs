@@ -16,7 +16,7 @@ namespace Test
             value.RemoveMember("id");
             string json = JsonWriter.Write(value);
 
-            Console.ReadKey();
+           	Console.WriteLine(json);
         }
     }
 }

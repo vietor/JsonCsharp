@@ -3,19 +3,6 @@ using System.Collections.Generic;
 
 namespace org.vxwo.csharp.json
 {
-    internal enum JsonType
-    {
-        None,
-        Boolean,
-        Int,
-        Long,
-        Double,
-        String,
-        Object,
-        Array,
-        Null,
-    }
-
     public class JsonValue
     {
         internal JsonType type;
