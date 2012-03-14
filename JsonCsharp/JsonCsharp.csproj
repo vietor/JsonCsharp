@@ -46,6 +46,7 @@
     <Compile Include="JsonCsharp\JsonSerializer.cs" />
     <Compile Include="JsonCsharp\JsonException.cs" />
     <Compile Include="JsonCsharp\JsonObjParser.cs" />
+    <Compile Include="JsonCsharp\JsonObjSerializer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
