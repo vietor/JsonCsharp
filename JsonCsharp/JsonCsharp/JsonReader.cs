@@ -7,5 +7,10 @@ namespace org.vxwo.csharp.json
         {
             return new JsonParser(json).Decode();
         }
+		
+		public static JsonValue Read(object obj)
+        {
+            return new JsonObjParser(obj).Decode();
+        }
     }
 }
