@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace org.vxwo.csharp.json
 {
     public class JsonWriter
@@ -8,9 +9,14 @@ namespace org.vxwo.csharp.json
             return new JsonSerializer(true, false).ConvertToJSON(obj);
         }
 		
-	public static T Write<T>(JsonValue obj)
+        public static object Write(Type type, JsonValue obj)
         {
-            return new JsonObjSerializer().ConvertToObject<T>(obj);
+            return new JsonObjSerializer().ConvertToObject(type, obj);
+        }
+		
+        public static T Write<T>(JsonValue obj)
+        {
+            return (T)Write(typeof(T), obj);
         }
     }
 }

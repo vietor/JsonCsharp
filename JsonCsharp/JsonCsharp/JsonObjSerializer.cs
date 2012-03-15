@@ -11,9 +11,9 @@ namespace org.vxwo.csharp.json
 		{
 		}
 		
-		internal T ConvertToObject<T> (JsonValue obj)
+		internal object ConvertToObject (Type type, JsonValue obj)
 		{
-			return (T)WriteObject (typeof(T), obj);
+			return WriteObject (type, obj);
 		}
 		
 		private object WriteObject (Type type, JsonValue obj)
