@@ -58,6 +58,20 @@ namespace org.vxwo.csharp.json
 			if (type.IsClass) {			
 				object result = Activator.CreateInstance (type);
 				foreach (FieldInfo info in type.GetFields()) {
+					bool ignore = false;
+					string name = info.Name;
+					foreach(Attribute attr in info.GetCustomAttributes(true))
+					{
+						if(attr is JsonIgnore)
+						{
+							ignore=true;
+							break;
+						}
+						else if(attr is JsonName)
+							name = ((JsonName)attr).GetName();
+					}
+					if(ignore)
+						continue;
 					if (obj.IsMember (info.Name))	
 						info.SetValue (result, WriteObject (info.FieldType, obj [info.Name]));
 				}

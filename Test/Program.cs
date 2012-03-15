@@ -7,6 +7,12 @@ namespace Test
 {
 	class Program
 	{
+		public enum C
+		{
+			CA = 0,
+			CB,
+		};
+		
 		public class TA
 		{
 			public int c = 100;
@@ -15,8 +21,15 @@ namespace Test
 
 		class A
 		{
-			public int a = 11;
-			public int B = 13;
+			[JsonName("1")]
+			public int a = 1;
+			
+			[JsonName("2")]
+			public int B = 3;
+			
+			[JsonIgnore]
+			public C c = C.CB;
+			
 			public int[] cs = new int[3];
 			public List<TA> tttt = new List<TA>();
 			
@@ -26,12 +39,6 @@ namespace Test
 				tttt.Add(ta);
 				tttt.Add(ta);
 			}
-		};
-		
-		public enum C
-		{
-			CA = 0,
-			CB,
 		};
 		
 		static void Main (string[] args)
@@ -46,7 +53,9 @@ namespace Test
 			Console.WriteLine (json);
 			
 			Console.WriteLine ("== Object to Json ==");
-			A a = new A ();			
+			A a = new A ();	
+			a.a = 11;
+			a.B = 22;
 			value = JsonReader.Read (a);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
@@ -55,6 +64,7 @@ namespace Test
 			a = JsonWriter.Write<A>(value);
 			a.a = 33;
 			a.B = 44;
+			a.c = C.CA;
 			a.cs[1]=55;
 			value = JsonReader.Read (a);
 			json = JsonWriter.Write (value);
