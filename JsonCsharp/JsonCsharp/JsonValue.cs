@@ -55,6 +55,8 @@ namespace org.vxwo.csharp.json
 
             set
             {
+                if(value == null)
+                    value = new JsonValue(JsonType.Null, null);
                 EnsureObject().Add(name, value);
             }
         }
@@ -99,10 +101,16 @@ namespace org.vxwo.csharp.json
 
         public JsonValue Append(JsonValue value)
         {
-            EnsureArray().Add(value);
+            if(value != null)
+            	EnsureArray().Add(value);
             return this;
         }
-
+        
+        public bool IsNull()
+        {
+            return type == JsonType.Null;
+        }
+	
         public bool IsBoolean()
         {
             return type == JsonType.Boolean;

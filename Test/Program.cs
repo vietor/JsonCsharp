@@ -33,6 +33,9 @@ namespace Test
 			public int[] cs = new int[3];
 			public List<TA> tttt = new List<TA>();
 			
+			public int[] cs1 = null;
+			public List<TA> tttt1 = null;
+			
 			public DateTime tt = DateTime.Now;
 			
 			public A ()
@@ -51,6 +54,7 @@ namespace Test
 			value ["ids"].Append (value ["id"]);
 			value ["ids"].Append (value ["id"]);
 			value.RemoveMember ("id");
+			value["ttt"] = null;
 			string json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 			

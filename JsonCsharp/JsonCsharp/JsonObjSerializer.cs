@@ -18,6 +18,9 @@ namespace org.vxwo.csharp.json
 		
 		private object WriteObject (Type type, JsonValue obj)
 		{
+			if(obj == null || obj.IsNull())
+				return null;
+			
 			if (type.IsArray) {
 				if (obj.Count < 1 || !type.HasElementType)
 					return null;
