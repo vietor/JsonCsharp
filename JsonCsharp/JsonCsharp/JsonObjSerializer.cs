@@ -72,8 +72,8 @@ namespace org.vxwo.csharp.json
 					}
 					if(ignore)
 						continue;
-					if (obj.IsMember (info.Name))	
-						info.SetValue (result, WriteObject (info.FieldType, obj [info.Name]));
+					if (obj.IsMember (name))	
+						info.SetValue (result, WriteObject (info.FieldType, obj [name]));
 				}
 				return result;
 			}
