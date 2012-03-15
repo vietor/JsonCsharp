@@ -40,6 +40,14 @@ namespace org.vxwo.csharp.json
 				return obj.AsDouble ();
 			if (type.Name.Equals ("String"))
 				return obj.AsString ();
+			if (type.Name.Equals ("DateTime"))
+			{
+				try{
+					return DateTime.Parse(obj.AsString());	
+				}catch(FormatException){
+					return null;
+				}
+			}
 			
 			if (type.IsEnum)
 				return Enum.Parse (type, obj.AsString ());

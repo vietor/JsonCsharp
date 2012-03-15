@@ -33,6 +33,8 @@ namespace Test
 			public int[] cs = new int[3];
 			public List<TA> tttt = new List<TA>();
 			
+			public DateTime tt = DateTime.Now;
+			
 			public A ()
 			{
 				TA ta= new TA();

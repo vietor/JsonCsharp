@@ -47,6 +47,8 @@ namespace org.vxwo.csharp.json
 				return new JsonValue (JsonType.Double, obj);
 			if (type.Name.Equals ("String"))
 				return new JsonValue (JsonType.String, obj);
+			if (type.Name.Equals ("DateTime"))
+				return new JsonValue (JsonType.String, string.Format("{0:yyyy-MM-dd HH:mm:ss}",(DateTime)obj));
 			
 			if (type.IsEnum)
 				return new JsonValue (JsonType.Int, Convert.ToInt32 (obj));
