@@ -51,9 +51,9 @@ namespace org.vxwo.csharp.json
 			if (type.IsEnum)
 				return new JsonValue (JsonType.Int, Convert.ToInt32 (obj));
 			
-			if (type.Namespace.Equals ("System.Collections.Generic")) {
+			if (type.Name.Equals("List`1")) {
 				JsonValue child, result = new JsonValue ();
-				foreach (object sub in (IEnumerable)obj) {
+				foreach (object sub in (IList)obj) {
 					child = ParseValue (sub);
 					if (child != null)
 						result.Append (child);

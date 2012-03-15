@@ -15,16 +15,16 @@ namespace Test
 
 		class A
 		{
-			public int a;
-			public int B;
+			public int a = 11;
+			public int B = 13;
 			public int[] cs = new int[3];
-			//public List<TA> tttt = new List<TA>();
+			public List<TA> tttt = new List<TA>();
 			
 			public A ()
 			{
-				//TA ta= new TA();
-				//tttt.Add(ta);
-				//tttt.Add(ta);
+				TA ta= new TA();
+				tttt.Add(ta);
+				tttt.Add(ta);
 			}
 		};
 		
@@ -36,6 +36,7 @@ namespace Test
 		
 		static void Main (string[] args)
 		{
+			Console.WriteLine ("== Basic ==");
 			JsonValue value = new JsonValue ();
 			value ["id"] = (JsonValue)"32";
 			value ["ids"].Append (value ["id"]);
@@ -44,10 +45,19 @@ namespace Test
 			string json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 			
+			Console.WriteLine ("== Object to Json ==");
 			A a = new A ();			
 			value = JsonReader.Read (a);
 			json = JsonWriter.Write (value);
+			Console.WriteLine (json);
+			
+			Console.WriteLine ("== Json to Object ==");
 			a = JsonWriter.Write<A>(value);
+			a.a = 33;
+			a.B = 44;
+			a.cs[1]=55;
+			value = JsonReader.Read (a);
+			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 		}
 	}

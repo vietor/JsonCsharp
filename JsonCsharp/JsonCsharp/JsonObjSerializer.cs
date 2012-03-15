@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace org.vxwo.csharp.json
 {
@@ -21,9 +23,8 @@ namespace org.vxwo.csharp.json
 					return null;
 				Type etype = type.GetElementType ();
 				Array array = Array.CreateInstance (etype, obj.Count);
-				for (int i=0; i< obj.Count; i++) {
+				for (int i=0; i< obj.Count; i++)
 					array.SetValue (WriteObject (etype, obj.GetAt (i)), i);
-				}
 				return array;
 			}
 			
@@ -43,12 +44,22 @@ namespace org.vxwo.csharp.json
 			if (type.IsEnum)
 				return Enum.Parse (type, obj.AsString ());
 			
-			if (type.IsClass) {
+			if (type.Name.Equals("List`1")) {
+				Type[] types = type.GetGenericArguments();
+				if(types == null || types.Length<1)
+					return null;
+				Type etype = types[0];
+				IList list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(etype));
+				for (int i=0; i< obj.Count; i++)
+					list.Add(WriteObject (etype, obj.GetAt (i)));
+				return list;
+			}
 			
+			if (type.IsClass) {			
 				object result = Activator.CreateInstance (type);
 				foreach (FieldInfo info in type.GetFields()) {
-					if (obj.IsMember (info.Name))
-						info.SetValue (result, WriteObject (info.GetType (), obj [info.Name]));
+					if (obj.IsMember (info.Name))	
+						info.SetValue (result, WriteObject (info.FieldType, obj [info.Name]));
 				}
 				return result;
 			}
