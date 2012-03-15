@@ -26,7 +26,7 @@ namespace org.vxwo.csharp.json
 			Type type = obj.GetType ();
 			
 			if (type.IsArray) {
-				JsonValue child, result = new JsonValue ();
+				JsonValue child, result = new JsonValue (JsonType.Array, null);
 				foreach (object sub in (Array)obj) {
 					child = ParseValue (sub);
 					if (child != null)
@@ -54,7 +54,7 @@ namespace org.vxwo.csharp.json
 				return new JsonValue (JsonType.Int, Convert.ToInt32 (obj));
 			
 			if (type.Name.Equals("List`1")) {
-				JsonValue child, result = new JsonValue ();
+				JsonValue child, result = new JsonValue (JsonType.Array, null);
 				foreach (object sub in (IList)obj) {
 					child = ParseValue (sub);
 					if (child != null)

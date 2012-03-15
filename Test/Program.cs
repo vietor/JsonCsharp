@@ -72,6 +72,8 @@ namespace Test
 			a.B = 44;
 			a.c = C.CA;
 			a.cs[1]=55;
+			a.cs1 = new int[0];
+			a.tttt1 = new List<TA>();
 			value = JsonReader.Read (a);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);

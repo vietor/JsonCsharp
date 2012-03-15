@@ -17,7 +17,10 @@ namespace org.vxwo.csharp.json
         internal JsonValue(JsonType type, object obj)
         {
             this.type = type;
-            this.store = obj;
+            if(this.type == JsonType.Array && obj == null)
+                this.store = new List<JsonValue>();
+	    else
+                this.store = obj;
         }
 
         public void Clear()
