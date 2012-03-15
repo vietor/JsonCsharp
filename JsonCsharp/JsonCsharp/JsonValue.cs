@@ -111,7 +111,7 @@ namespace org.vxwo.csharp.json
         
         public bool IsNull()
         {
-            return type == JsonType.Null;
+            return type == JsonType.Null || type == JsonType.None;
         }
 	
         public bool IsBoolean()
