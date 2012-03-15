@@ -37,6 +37,7 @@ namespace Test
 			public List<TA> tttt1 = null;
 			
 			public DateTime tt = DateTime.Now;
+			public string tt2 = null;
 			
 			public A ()
 			{
@@ -66,6 +67,11 @@ namespace Test
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 			
+			Console.WriteLine ("== Object to Json2 ==");
+			value = JsonReader.Read(json);
+			json = JsonWriter.Write (value);
+			Console.WriteLine (json);
+			
 			Console.WriteLine ("== Json to Object ==");
 			a = JsonWriter.Write<A>(value);
 			a.a = 33;
@@ -75,6 +81,11 @@ namespace Test
 			a.cs1 = new int[0];
 			a.tttt1 = new List<TA>();
 			value = JsonReader.Read (a);
+			json = JsonWriter.Write (value);
+			Console.WriteLine (json);
+			
+			Console.WriteLine ("== Json to Object2 ==");
+			value = JsonReader.Read (json);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 		}

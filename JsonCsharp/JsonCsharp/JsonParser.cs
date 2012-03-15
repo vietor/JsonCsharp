@@ -78,7 +78,7 @@ namespace org.vxwo.csharp.json
 
         private JsonValue ParseArray()
         {
-            JsonValue array = new JsonValue();
+            JsonValue array = new JsonValue(JsonType.Array, null);
 
             ConsumeToken(); // [
 
