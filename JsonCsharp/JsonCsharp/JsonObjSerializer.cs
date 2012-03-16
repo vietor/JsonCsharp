@@ -68,7 +68,29 @@ namespace org.vxwo.csharp.json
 			
 			if (type.IsClass) {			
 				object result = Activator.CreateInstance (type);
+				foreach (PropertyInfo info in type.GetProperties()) {
+					if(!info.CanWrite)
+						continue;
+					bool ignore = false;
+					string name = info.Name;
+					foreach(Attribute attr in info.GetCustomAttributes(true))
+					{
+						if(attr is JsonIgnore)
+						{
+							ignore=true;
+							break;
+						}
+						else if(attr is JsonName)
+							name = ((JsonName)attr).GetName();
+					}
+					if(ignore)
+						continue;
+					if (obj.IsMember (name))
+						info.SetValue (result, WriteObject (info.PropertyType, obj [name]), null);
+				}
 				foreach (FieldInfo info in type.GetFields()) {
+					if(!info.IsPublic)
+						continue;
 					bool ignore = false;
 					string name = info.Name;
 					foreach(Attribute attr in info.GetCustomAttributes(true))

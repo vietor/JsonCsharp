@@ -39,6 +39,13 @@ namespace Test
 			public DateTime tt = DateTime.Now;
 			public string tt2 = null;
 			
+			public int TQ;
+			
+			private int dtq=1;
+			
+			[JsonName("tq1")]
+			public int TQ1 {get {return dtq;} set {dtq = value;}}
+			
 			public A ()
 			{
 				TA ta= new TA();
@@ -69,6 +76,8 @@ namespace Test
 			
 			Console.WriteLine ("== Object to Json2 ==");
 			value = JsonReader.Read(json);
+			a = JsonWriter.Write<A>(value);
+			value = JsonReader.Read (a);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 			
@@ -80,12 +89,16 @@ namespace Test
 			a.cs[1]=55;
 			a.cs1 = new int[0];
 			a.tttt1 = new List<TA>();
+			a.TQ = 99999;
+			a.TQ1 = 999999;
 			value = JsonReader.Read (a);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 			
 			Console.WriteLine ("== Json to Object2 ==");
 			value = JsonReader.Read (json);
+			a = JsonWriter.Write<A>(value);
+			value = JsonReader.Read (a);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 		}

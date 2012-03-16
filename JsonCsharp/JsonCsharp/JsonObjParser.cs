@@ -65,7 +65,31 @@ namespace org.vxwo.csharp.json
 			
 			if (type.IsClass) {
 				JsonValue child, result = new JsonValue ();
+				foreach(PropertyInfo info in type.GetProperties())
+				{
+					if(!info.CanRead)
+						continue;
+					bool ignore = false;
+					string name = info.Name;
+					foreach(Attribute attr in info.GetCustomAttributes(true))
+					{
+						if(attr is JsonIgnore)
+						{
+							ignore=true;
+							break;
+						}
+						else if(attr is JsonName)
+							name = ((JsonName)attr).GetName();
+					}
+					if(ignore)
+						continue;
+					child = ParseValue (info.GetValue(obj, null));
+					if (child != null)
+						result [name] = child;
+				}
 				foreach (FieldInfo info in type.GetFields()) {
+					if(!info.IsPublic)
+						continue;
 					bool ignore = false;
 					string name = info.Name;
 					foreach(Attribute attr in info.GetCustomAttributes(true))

@@ -2,7 +2,7 @@ using System;
 
 namespace org.vxwo.csharp.json
 {
-	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Field|AttributeTargets.Property, AllowMultiple = false)]
 	
 	public sealed class JsonIgnore: Attribute
 	{
