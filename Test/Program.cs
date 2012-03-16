@@ -75,10 +75,7 @@ namespace Test
 			Console.WriteLine (json);
 			
 			Console.WriteLine ("== Object to Json2 ==");
-			value = JsonReader.Read(json);
-			a = JsonWriter.Write<A>(value);
-			value = JsonReader.Read (a);
-			json = JsonWriter.Write (value);
+			json = JsonTool.Serialize(JsonTool.Deserialize<A>(json));
 			Console.WriteLine (json);
 			
 			Console.WriteLine ("== Json to Object ==");
@@ -96,10 +93,7 @@ namespace Test
 			Console.WriteLine (json);
 			
 			Console.WriteLine ("== Json to Object2 ==");
-			value = JsonReader.Read (json);
-			a = JsonWriter.Write<A>(value);
-			value = JsonReader.Read (a);
-			json = JsonWriter.Write (value);
+			json = JsonTool.Serialize(JsonTool.Deserialize<A>(json));
 			Console.WriteLine (json);
 		}
 	}

@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace org.vxwo.csharp.json
 {
-	public class JsonObjParser
+	class JsonObjParser
 	{		
 		private object root;
 		

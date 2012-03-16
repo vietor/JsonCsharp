@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace org.vxwo.csharp.json
 {
-	public class JsonObjSerializer
+	class JsonObjSerializer
 	{
 		internal JsonObjSerializer ()
 		{
@@ -22,7 +22,7 @@ namespace org.vxwo.csharp.json
 				return null;
 			
 			if (type.IsArray) {
-				if (obj.Count < 1 || !type.HasElementType)
+				if (!type.HasElementType)
 					return null;
 				Type etype = type.GetElementType ();
 				Array array = Array.CreateInstance (etype, obj.Count);
