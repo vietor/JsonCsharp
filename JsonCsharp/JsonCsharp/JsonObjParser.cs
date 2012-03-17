@@ -34,7 +34,10 @@ namespace org.vxwo.csharp.json
 				}
 				return result;
 			}
-			
+			if (type.Name.Equals ("Char"))
+				return new JsonValue (JsonType.Int, Convert.ToInt32(obj));
+			if (type.Name.Equals ("Byte"))
+				return new JsonValue (JsonType.Int, Convert.ToInt32(obj));
 			if (type.Name.Equals ("Boolean"))
 				return new JsonValue (JsonType.Boolean, obj);
 			if (type.Name.Equals ("Int32"))

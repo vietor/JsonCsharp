@@ -46,6 +46,11 @@ namespace Test
 			[JsonName("tq1")]
 			public int TQ1 {get {return dtq;} set {dtq = value;}}
 			
+			public char Car = (char)11;
+			public byte Bar = (byte)12;
+			public char[] Carr= new char[3];
+			public byte[] Barr= new byte[3];
+			
 			public A ()
 			{
 				TA ta= new TA();

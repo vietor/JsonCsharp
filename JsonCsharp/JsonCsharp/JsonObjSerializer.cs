@@ -30,7 +30,10 @@ namespace org.vxwo.csharp.json
 					array.SetValue (WriteObject (etype, obj.GetAt (i)), i);
 				return array;
 			}
-			
+			if (type.Name.Equals ("Char"))
+				return Convert.ToChar(obj.AsInt ());
+			if (type.Name.Equals ("Byte"))
+				return Convert.ToByte(obj.AsInt ());
 			if (type.Name.Equals ("Boolean"))
 				return obj.AsBoolean ();
 			if (type.Name.Equals ("Int32"))
