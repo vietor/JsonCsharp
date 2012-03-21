@@ -94,6 +94,8 @@ namespace org.vxwo.csharp.json
 				foreach (FieldInfo info in type.GetFields()) {
 					if(!info.IsPublic)
 						continue;
+					if(info.IsLiteral)
+						continue;
 					bool ignore = false;
 					string name = info.Name;
 					foreach(Attribute attr in info.GetCustomAttributes(true))

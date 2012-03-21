@@ -43,6 +43,8 @@ namespace Test
 			
 			private int dtq=1;
 			
+			public const int dc = 12;
+			
 			[JsonName("tq1")]
 			public int TQ1 {get {return dtq;} set {dtq = value;}}
 			
