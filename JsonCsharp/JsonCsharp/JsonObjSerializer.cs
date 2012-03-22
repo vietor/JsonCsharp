@@ -69,13 +69,15 @@ namespace org.vxwo.csharp.json
 				return list;
 			}
 			
-			if (type.IsClass) {			
+			if (type.IsClass) {
+				List<string> aliasName = new List<string>();	
 				object result = Activator.CreateInstance (type);
 				foreach (PropertyInfo info in type.GetProperties()) {
 					if(!info.CanWrite)
 						continue;
 					bool ignore = false;
 					string name = info.Name;
+					aliasName.Clear();
 					foreach(Attribute attr in info.GetCustomAttributes(true))
 					{
 						if(attr is JsonIgnore)
@@ -85,11 +87,26 @@ namespace org.vxwo.csharp.json
 						}
 						else if(attr is JsonName)
 							name = ((JsonName)attr).GetName();
+						else if(attr is JsonAlias)
+						{
+							JsonAlias al = attr as JsonAlias;
+							if(al.GetName() == null)
+								aliasName.Add(info.Name);
+							else
+								aliasName.Add(al.GetName());
+						}
 					}
 					if(ignore)
 						continue;
-					if (obj.IsMember (name))
-						info.SetValue (result, WriteObject (info.PropertyType, obj [name]), null);
+					aliasName.Add(name);
+					foreach(string i in aliasName)
+					{
+						if (obj.IsMember (i))
+						{
+							info.SetValue (result, WriteObject (info.PropertyType, obj [name]), null);
+							break;
+						}
+					}
 				}
 				foreach (FieldInfo info in type.GetFields()) {
 					if(!info.IsPublic)
@@ -98,6 +115,7 @@ namespace org.vxwo.csharp.json
 						continue;
 					bool ignore = false;
 					string name = info.Name;
+					aliasName.Clear();
 					foreach(Attribute attr in info.GetCustomAttributes(true))
 					{
 						if(attr is JsonIgnore)
@@ -107,11 +125,26 @@ namespace org.vxwo.csharp.json
 						}
 						else if(attr is JsonName)
 							name = ((JsonName)attr).GetName();
+						else if(attr is JsonAlias)
+						{
+							JsonAlias al = attr as JsonAlias;
+							if(al.GetName() == null)
+								aliasName.Add(info.Name);
+							else
+								aliasName.Add(al.GetName());
+						}
 					}
 					if(ignore)
 						continue;
-					if (obj.IsMember (name))	
-						info.SetValue (result, WriteObject (info.FieldType, obj [name]));
+					aliasName.Add(name);
+					foreach(string i in aliasName)
+					{
+						if (obj.IsMember (i))
+						{
+							info.SetValue (result, WriteObject (info.FieldType, obj [i]));
+							break;
+						}
+					}
 				}
 				return result;
 			}
