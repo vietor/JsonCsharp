@@ -61,14 +61,6 @@ namespace Test
 			}
 		};
 		
-		public class TB
-		{
-			public int aaa = 1;
-			
-			[JsonName("b"), JsonAlias, JsonAlias("bb")]
-			public int bbbb = 1;
-		}
-		
 		static void Main (string[] args)
 		{
 			Console.WriteLine ("== Basic ==");
@@ -109,20 +101,6 @@ namespace Test
 			
 			Console.WriteLine ("== Json to Object2 ==");
 			json = JsonTool.Serialize(JsonTool.Deserialize<A>(json));
-			Console.WriteLine (json);
-			
-			Console.WriteLine ("== Json Alias ==");
-			json = "{\"a\":10, \"bb\":100}";
-			TB tb = JsonTool.Deserialize<TB>(json);
-			json = JsonTool.Serialize(JsonTool.Deserialize<TB>(json));
-			Console.WriteLine (json);
-			json = "{\"a\":10, \"bbb\":100}";
-			tb = JsonTool.Deserialize<TB>(json);
-			json = JsonTool.Serialize(JsonTool.Deserialize<TB>(json));
-			Console.WriteLine (json);
-			json = "{\"a\":10, \"bbbb\":100}";
-			tb = JsonTool.Deserialize<TB>(json);
-			json = JsonTool.Serialize(JsonTool.Deserialize<TB>(json));
 			Console.WriteLine (json);
 		}
 	}

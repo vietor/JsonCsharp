@@ -50,7 +50,6 @@
     <Compile Include="JsonCsharp\JsonIgnore.cs" />
     <Compile Include="JsonCsharp\JsonName.cs" />
     <Compile Include="JsonCsharp\JsonTool.cs" />
-    <Compile Include="JsonCsharp\JsonAlias.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
