@@ -8,15 +8,15 @@ namespace org.vxwo.csharp.json
 	class JsonSerializer
     {
         private StringBuilder output = new StringBuilder();
+		private bool serializeZeros = true;
         private bool serializeNulls = true;
         private const int MAX_DEPTH = 10;
-        private bool indentOutput = false;
         private int currentDepth = 0;
 
-        internal JsonSerializer(bool SerializeNulls, bool IndentOutput)
+        internal JsonSerializer(bool SerializeNulls, bool SerializeZeros)
         {
-            this.indentOutput = IndentOutput;
             this.serializeNulls = SerializeNulls;
+			this.serializeZeros = SerializeZeros;
         }
 
         internal string ConvertToJSON(JsonValue obj)
@@ -59,7 +59,6 @@ namespace org.vxwo.csharp.json
 
         private void WriteObject(JsonValue obj)
         {
-            Indent();
             currentDepth++;
             if (currentDepth > MAX_DEPTH)
                 throw new JsonException("Serializer encountered maximum depth of " + MAX_DEPTH);
@@ -71,7 +70,9 @@ namespace org.vxwo.csharp.json
                 if (append)
                     output.Append(',');
 
-                if (kv.Value.type == JsonType.None || (kv.Value.type == JsonType.Null && serializeNulls == false))
+                if (kv.Value.type == JsonType.None 
+				    || (serializeNulls == false && kv.Value.type == JsonType.Null)
+				    || (serializeZeros == false && kv.Value.IsZero()))
                     append = false;
                 else
                 {
@@ -81,14 +82,12 @@ namespace org.vxwo.csharp.json
             }
 
             currentDepth--;
-            Indent();
             output.Append('}');
             currentDepth--;
         }
 
         private void WriteArray(JsonValue obj)
         {
-            Indent();
             currentDepth++;
             if (currentDepth > MAX_DEPTH)
                 throw new JsonException("Serializer encountered maximum depth of " + MAX_DEPTH);
@@ -110,31 +109,15 @@ namespace org.vxwo.csharp.json
             }
 
             currentDepth--;
-            Indent();
             output.Append(']');
             currentDepth--;
-        }
-
-        private void Indent()
-        {
-            Indent(false);
-        }
-
-        private void Indent(bool dec)
-        {
-            if (indentOutput)
-            {
-                output.Append("\r\n");
-                for (int i = 0; i < currentDepth - (dec ? 1 : 0); i++)
-                    output.Append("\t");
-            }
         }
 
         private void WritePairFast(string name, string value)
         {
             if ((value == null) && serializeNulls == false)
                 return;
-            Indent();
+
             WriteStringFast(name);
 
             output.Append(':');
@@ -146,7 +129,7 @@ namespace org.vxwo.csharp.json
         {
             if ((value.type == JsonType.None || value.type == JsonType.Null) && serializeNulls == false)
                 return;
-            Indent();
+
             WriteStringFast(name);
 
             output.Append(':');

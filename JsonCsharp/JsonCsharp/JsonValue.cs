@@ -22,6 +22,17 @@ namespace org.vxwo.csharp.json
 	    else
                 this.store = obj;
         }
+		
+		internal bool IsZero()
+		{
+			if(IsInt())
+				return (int)store==0;
+			if(IsLong())
+				return (long)store==0;
+			if(IsDouble())
+				return (double)store==0.0f;
+			return false;
+		}
 
         public void Clear()
         {

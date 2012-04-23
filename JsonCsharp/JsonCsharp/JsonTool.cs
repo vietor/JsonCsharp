@@ -23,6 +23,10 @@ namespace org.vxwo.csharp.json
 			return JsonWriter.Write(JsonReader.Read(obj));
 		}
 		
+		public static string SerializeShrink(object obj)
+		{
+			return JsonWriter.WriteShrink(JsonReader.Read(obj));
+		}		
 	}
 }
 

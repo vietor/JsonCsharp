@@ -93,15 +93,18 @@ namespace Test
 			a.cs[1]=55;
 			a.cs1 = new int[0];
 			a.tttt1 = new List<TA>();
-			a.TQ = 99999;
+			a.TQ = 0;
 			a.TQ1 = 999999;
 			value = JsonReader.Read (a);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
-			
-			Console.WriteLine ("== Json to Object2 ==");
-			json = JsonTool.Serialize(JsonTool.Deserialize<A>(json));
+						
+			Console.WriteLine ("== Json to Object2 (Shrink) ==");
+			json = JsonTool.SerializeShrink(JsonTool.Deserialize<A>(json));
 			Console.WriteLine (json);
+			Console.WriteLine ("== Json to Object2 (Normal) ==");
+			json = JsonTool.Serialize(JsonTool.Deserialize<A>(json));
+			Console.WriteLine (json);		
 		}
 	}
 }
