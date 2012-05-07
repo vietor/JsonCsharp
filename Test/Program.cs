@@ -53,6 +53,9 @@ namespace Test
 			public char[] Carr= new char[3];
 			public byte[] Barr= new byte[3];
 			
+			public int q1=0;
+			public int q2=0;
+			
 			public A ()
 			{
 				TA ta= new TA();

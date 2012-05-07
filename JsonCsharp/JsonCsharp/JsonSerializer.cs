@@ -67,18 +67,16 @@ namespace org.vxwo.csharp.json
             bool append = false;
             foreach (KeyValuePair<string, JsonValue> kv in obj.store as Dictionary<string, JsonValue>)
             {
-                if (append)
-                    output.Append(',');
-
                 if (kv.Value.type == JsonType.None 
 				    || (serializeNulls == false && kv.Value.type == JsonType.Null)
 				    || (serializeZeros == false && kv.Value.IsZero()))
-                    append = false;
-                else
-                {
-                    WritePair(kv.Key, kv.Value);
-                    append = true;
-                }
+                    continue;
+				
+				if (append)
+                    output.Append(',');
+				
+                WritePair(kv.Key, kv.Value);
+                append = true;
             }
 
             currentDepth--;
