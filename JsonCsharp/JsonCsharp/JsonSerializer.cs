@@ -39,8 +39,14 @@ namespace org.vxwo.csharp.json
                 case JsonType.Int:
                     output.Append(Convert.ToString((int)obj.store));
                     break;
+                case JsonType.UInt:
+                    output.Append(Convert.ToString((uint)obj.store));
+                    break;
                 case JsonType.Long:
                     output.Append(Convert.ToString((long)obj.store));
+                    break;
+                case JsonType.ULong:
+                    output.Append(Convert.ToString((ulong)obj.store));
                     break;
                 case JsonType.Double:
                     output.Append(Convert.ToString((double)obj.store));

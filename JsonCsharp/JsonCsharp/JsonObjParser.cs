@@ -42,8 +42,12 @@ namespace org.vxwo.csharp.json
 				return new JsonValue (JsonType.Boolean, obj);
 			if (type.Name.Equals ("Int32"))
 				return new JsonValue (JsonType.Int, obj);
+            if (type.Name.Equals("UInt32"))
+                return new JsonValue(JsonType.UInt, obj);
 			if (type.Name.Equals ("Int64"))
 				return new JsonValue (JsonType.Long, obj);
+            if (type.Name.Equals("UInt64"))
+                return new JsonValue(JsonType.ULong, obj);
 			if (type.Name.Equals ("Single"))
 				return new JsonValue (JsonType.Double, (double)(float)obj);
 			if (type.Name.Equals ("Double"))

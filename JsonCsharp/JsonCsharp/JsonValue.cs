@@ -135,9 +135,19 @@ namespace org.vxwo.csharp.json
             return type == JsonType.Int;
         }
 
+        public bool IsUInt()
+        {
+            return type == JsonType.UInt;
+        }
+
         public bool IsLong()
         {
             return type == JsonType.Long;
+        }
+
+        public bool IsULong()
+        {
+            return type == JsonType.ULong;
         }
 
         public bool IsDouble()
@@ -169,12 +179,36 @@ namespace org.vxwo.csharp.json
                 value = (int)store;
             else if (IsString())
                 value = int.Parse((string)store);
+            else if (IsUInt())
+                value = (int)(uint)store;
             else if (IsLong())
                 value = (int)(long)store;
+            else if (IsULong())
+                value = (int)(ulong)store;
             else if (IsDouble())
                 value = (int)(double)store;
             else
                 throw new Exception("JsonValue cannot convert to a int");
+            return value;
+        }
+
+        public uint AsUInt()
+        {
+            uint value = 0;
+            if (IsUInt())
+                value = (uint)store;
+            else if (IsString())
+                value = uint.Parse((string)store);
+            else if (IsInt())
+                value = (uint)(int)store;
+            else if (IsLong())
+                value = (uint)(long)store;
+            else if (IsULong())
+                value = (uint)(ulong)store;
+            else if (IsDouble())
+                value = (uint)(double)store;
+            else
+                throw new Exception("JsonValue cannot convert to a uint");
             return value;
         }
 
@@ -187,10 +221,34 @@ namespace org.vxwo.csharp.json
                 value = long.Parse((string)store);
             else if (IsInt())
                 value = (long)(int)store;
+            else if (IsUInt())
+                value = (long)(uint)store;
+            else if (IsULong())
+                value = (long)(ulong)store;
             else if (IsDouble())
                 value = (long)(double)store;
             else
                 throw new Exception("JsonValue cannot convert to a long");
+            return value;
+        }
+
+        public ulong AsULong()
+        {
+            ulong value = 0;
+            if (IsULong())
+                value = (ulong)store;
+            else if (IsString())
+                value = ulong.Parse((string)store);
+            else if (IsInt())
+                value = (ulong)(int)store;
+            else if (IsUInt())
+                value = (ulong)(uint)store;
+            else if (IsLong())
+                value = (ulong)(long)store;
+            else if (IsDouble())
+                value = (ulong)(double)store;
+            else
+                throw new Exception("JsonValue cannot convert to a ulong");
             return value;
         }
 
@@ -203,8 +261,12 @@ namespace org.vxwo.csharp.json
                 value = double.Parse((string)store);
             else if (IsInt())
                 value = (double)(int)store;
+            else if (IsUInt())
+                value = (double)(uint)store;
             else if (IsLong())
                 value = (double)(long)store;
+            else if (IsULong())
+                value = (double)(ulong)store;
             else
                 throw new Exception("JsonValue cannot convert to a double");
             return value;
@@ -225,9 +287,19 @@ namespace org.vxwo.csharp.json
             return new JsonValue(JsonType.Int, value);
         }
 
+        public static implicit operator JsonValue(uint value)
+        {
+            return new JsonValue(JsonType.UInt, value);
+        }
+
         public static implicit operator JsonValue(long value)
         {
             return new JsonValue(JsonType.Long, value);
+        }
+
+        public static implicit operator JsonValue(ulong value)
+        {
+            return new JsonValue(JsonType.ULong, value);
         }
 
         public static implicit operator JsonValue(double value)

@@ -38,8 +38,12 @@ namespace org.vxwo.csharp.json
 				return obj.AsBoolean ();
 			if (type.Name.Equals ("Int32"))
 				return obj.AsInt ();
+            if (type.Name.Equals("UInt32"))
+                return obj.AsUInt();
 			if (type.Name.Equals ("Int64"))
 				return obj.AsLong ();
+            if (type.Name.Equals("UInt64"))
+                return obj.AsULong();
 			if (type.Name.Equals ("Single"))
 				return (float)obj.AsDouble ();
 			if (type.Name.Equals ("Double"))

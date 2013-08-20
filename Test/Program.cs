@@ -16,7 +16,7 @@ namespace Test
 		public class TA
 		{
 			public int c = 100;
-			public  int d = 1000;
+			public uint d = 1000;
 		}
 
 		class A
@@ -33,7 +33,7 @@ namespace Test
 			public int[] cs = new int[3];
 			public List<TA> tttt = new List<TA>();
 			
-			public int[] cs1 = null;
+			public uint[] cs1 = null;
 			public List<TA> tttt1 = null;
 			
 			public DateTime tt = DateTime.Now;
@@ -94,7 +94,7 @@ namespace Test
 			a.B = 44;
 			a.c = C.CA;
 			a.cs[1]=55;
-			a.cs1 = new int[0];
+			a.cs1 = new uint[0];
 			a.tttt1 = new List<TA>();
 			a.TQ = 0;
 			a.TQ1 = 999999;
