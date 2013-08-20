@@ -290,9 +290,21 @@ namespace org.vxwo.csharp.json
             }
             if (result == null)
             {
+                uint value_uint;
+                if (uint.TryParse(number, out value_uint))
+                    result = (JsonValue)value_uint;
+            }
+            if (result == null)
+            {
                 long value_long;
                 if (long.TryParse(number, out value_long))
                     result = (JsonValue)value_long;
+            }
+            if (result == null)
+            {
+                ulong value_ulong;
+                if (ulong.TryParse(number, out value_ulong))
+                    result = (JsonValue)value_ulong;
             }
             if (result == null)
                 result = (JsonValue)0;
