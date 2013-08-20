@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonCsharp\JsonMapper.cs" />
     <Compile Include="JsonCsharp\JsonReader.cs" />
     <Compile Include="JsonCsharp\JsonValue.cs" />
     <Compile Include="JsonCsharp\JsonWriter.cs" />
@@ -49,7 +50,6 @@
     <Compile Include="JsonCsharp\JsonObjSerializer.cs" />
     <Compile Include="JsonCsharp\JsonIgnore.cs" />
     <Compile Include="JsonCsharp\JsonName.cs" />
-    <Compile Include="JsonCsharp\JsonTool.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

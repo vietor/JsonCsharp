@@ -85,7 +85,7 @@ namespace Test
 			Console.WriteLine (json);
 			
 			Console.WriteLine ("== Object to Json2 ==");
-			json = JsonTool.Serialize(JsonTool.Deserialize<A>(json));
+            json = JsonMapper.ToJson(JsonMapper.ToObject<A>(json));
 			Console.WriteLine (json);
 			
 			Console.WriteLine ("== Json to Object ==");
@@ -103,11 +103,13 @@ namespace Test
 			Console.WriteLine (json);
 						
 			Console.WriteLine ("== Json to Object2 (Shrink) ==");
-			json = JsonTool.SerializeShrink(JsonTool.Deserialize<A>(json));
+            json = JsonMapper.ToJsonShrink(JsonMapper.ToObject<A>(json));
 			Console.WriteLine (json);
 			Console.WriteLine ("== Json to Object2 (Normal) ==");
-			json = JsonTool.Serialize(JsonTool.Deserialize<A>(json));
-			Console.WriteLine (json);		
+            json = JsonMapper.ToJson(JsonMapper.ToObject<A>(json));
+			Console.WriteLine (json);
+
+            Console.ReadKey();
 		}
 	}
 }
