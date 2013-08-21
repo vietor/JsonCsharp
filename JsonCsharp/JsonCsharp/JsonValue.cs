@@ -27,8 +27,12 @@ namespace JsonCsharp
 		{
 			if(IsInt())
 				return (int)store==0;
+            if (IsUInt())
+                return (uint)store == 0;
 			if(IsLong())
 				return (long)store==0;
+            if (IsULong())
+                return (ulong)store == 0;
 			if(IsDouble())
 				return (double)store==0.0f;
 			return false;
