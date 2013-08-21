@@ -26,7 +26,7 @@ namespace JsonCsharp
 		internal bool IsZero()
 		{
             if (IsNumberic())
-                return (ulong)store == 0;
+                return Convert.ToUInt64(store) == 0;
 			return false;
 		}
 
@@ -162,7 +162,7 @@ namespace JsonCsharp
         {
             int value = 0;
             if (IsNumberic())
-                value = (int)store;
+                value = Convert.ToInt32(store);
             else if (IsString())
                 value = int.Parse((string)store);
             else
@@ -174,7 +174,7 @@ namespace JsonCsharp
         {
             uint value = 0;
             if (IsNumberic())
-                value = (uint)store;
+                value = Convert.ToUInt32(store);
             else if (IsString())
                 value = uint.Parse((string)store);
             else
@@ -186,7 +186,9 @@ namespace JsonCsharp
         {
             long value = 0;
             if (IsNumberic())
-                value = (long)store;
+                value = Convert.ToInt64(store);
+            else if (IsString())
+                value = long.Parse((string)store);
             else
                 throw new Exception("JsonValue cannot convert to a long");
             return value;
@@ -196,7 +198,7 @@ namespace JsonCsharp
         {
             ulong value = 0;
             if (IsNumberic())
-                value = (ulong)store;
+                value = Convert.ToUInt64(store);
             else if (IsString())
                 value = ulong.Parse((string)store);
             else
@@ -208,7 +210,7 @@ namespace JsonCsharp
         {
             double value = 0;
             if (IsNumberic())
-                value = (double)store;
+                value = Convert.ToDouble(store);
             else if (IsString())
                 value = double.Parse((string)store);
             else

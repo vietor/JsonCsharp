@@ -74,45 +74,33 @@ namespace JsonCsharp
             if (type.IsEnum)
                 return Enum.Parse(type, obj.AsString());
 			
-			if (type.IsClass) {			
+			if (type.IsClass) {
+                string name;
+                object[] attrs;
 				object result = Activator.CreateInstance (type);
 				foreach (PropertyInfo info in type.GetProperties()) {
 					if(!info.CanWrite)
 						continue;
-					bool ignore = false;
-					string name = info.Name;
-					foreach(Attribute attr in info.GetCustomAttributes(false))
-					{
-						if(attr is JsonIgnore)
-						{
-							ignore=true;
-							break;
-						}
-						else if(attr is JsonName)
-							name = ((JsonName)attr).GetName();
-					}
-					if(ignore)
-						continue;
+                    if (info.IsDefined(typeof(JsonIgnore), false))
+                        continue;
+                    attrs = info.GetCustomAttributes(typeof(JsonName), false);
+                    if (attrs != null && attrs.Length > 0)
+                        name = ((JsonName)attrs[0]).GetName();
+                    else
+                        name = info.Name;
 					if (obj.IsMember (name))
 						info.SetValue (result, WriteObject (info.PropertyType, obj [name]), null);
 				}
 				foreach (FieldInfo info in type.GetFields()) {
 					if(!info.IsPublic || info.IsLiteral)
 						continue;
-					bool ignore = false;
-					string name = info.Name;
-					foreach(Attribute attr in info.GetCustomAttributes(false))
-					{
-						if(attr is JsonIgnore)
-						{
-							ignore=true;
-							break;
-						}
-						else if(attr is JsonName)
-							name = ((JsonName)attr).GetName();
-					}
-					if(ignore)
-						continue;
+                    if (info.IsDefined(typeof(JsonIgnore), false))
+                        continue;
+                    attrs = info.GetCustomAttributes(typeof(JsonName), false);
+                    if (attrs != null && attrs.Length > 0)
+                        name = ((JsonName)attrs[0]).GetName();
+                    else
+                        name = info.Name;
 					if (obj.IsMember (name))	
 						info.SetValue (result, WriteObject (info.FieldType, obj [name]));
 				}
