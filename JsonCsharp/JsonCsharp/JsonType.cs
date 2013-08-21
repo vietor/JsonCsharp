@@ -1,6 +1,6 @@
 using System;
 
-namespace org.vxwo.csharp.json
+namespace JsonCsharp
 {
 	enum JsonType
 	{

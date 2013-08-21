@@ -1,6 +1,6 @@
 using System;
 
-namespace org.vxwo.csharp.json
+namespace JsonCsharp
 {
 	public class JsonException: Exception
 	{

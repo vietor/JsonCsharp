@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace org.vxwo.csharp.json
+namespace JsonCsharp
 {
     public class JsonValue
     {

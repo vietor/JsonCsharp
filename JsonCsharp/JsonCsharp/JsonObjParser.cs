@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using System.Collections;
 
-namespace org.vxwo.csharp.json
+namespace JsonCsharp
 {
 	class JsonObjParser
 	{		

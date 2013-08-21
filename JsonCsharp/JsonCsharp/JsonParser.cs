@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace org.vxwo.csharp.json
+namespace JsonCsharp
 {
 	class JsonParser
     {

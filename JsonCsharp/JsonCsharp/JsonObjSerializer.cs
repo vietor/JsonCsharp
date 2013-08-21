@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace org.vxwo.csharp.json
+namespace JsonCsharp
 {
 	class JsonObjSerializer
 	{
