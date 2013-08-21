@@ -21,15 +21,6 @@ namespace JsonCsharp
 			if(obj == null || obj.IsNull())
 				return null;
 			
-			if (type.IsArray) {
-				if (!type.HasElementType)
-					return null;
-				Type etype = type.GetElementType ();
-				Array array = Array.CreateInstance (etype, obj.Count);
-				for (int i=0; i< obj.Count; i++)
-					array.SetValue (WriteObject (etype, obj.GetAt (i)), i);
-				return array;
-			}
 			if (type.Name.Equals ("Char"))
 				return Convert.ToChar(obj.AsInt ());
 			if (type.Name.Equals ("Byte"))
@@ -58,10 +49,6 @@ namespace JsonCsharp
 					return null;
 				}
 			}
-			
-			if (type.IsEnum)
-				return Enum.Parse (type, obj.AsString ());
-			
 			if (type.Name.Equals("List`1")) {
 				Type[] types = type.GetGenericArguments();
 				if(types == null || types.Length<1)
@@ -72,6 +59,20 @@ namespace JsonCsharp
 					list.Add(WriteObject (etype, obj.GetAt (i)));
 				return list;
 			}
+
+            if (type.IsArray)
+            {
+                if (!type.HasElementType)
+                    return null;
+                Type etype = type.GetElementType();
+                Array array = Array.CreateInstance(etype, obj.Count);
+                for (int i = 0; i < obj.Count; i++)
+                    array.SetValue(WriteObject(etype, obj.GetAt(i)), i);
+                return array;
+            }
+
+            if (type.IsEnum)
+                return Enum.Parse(type, obj.AsString());
 			
 			if (type.IsClass) {			
 				object result = Activator.CreateInstance (type);
@@ -80,7 +81,7 @@ namespace JsonCsharp
 						continue;
 					bool ignore = false;
 					string name = info.Name;
-					foreach(Attribute attr in info.GetCustomAttributes(true))
+					foreach(Attribute attr in info.GetCustomAttributes(false))
 					{
 						if(attr is JsonIgnore)
 						{
@@ -96,13 +97,11 @@ namespace JsonCsharp
 						info.SetValue (result, WriteObject (info.PropertyType, obj [name]), null);
 				}
 				foreach (FieldInfo info in type.GetFields()) {
-					if(!info.IsPublic)
-						continue;
-					if(info.IsLiteral)
+					if(!info.IsPublic || info.IsLiteral)
 						continue;
 					bool ignore = false;
 					string name = info.Name;
-					foreach(Attribute attr in info.GetCustomAttributes(true))
+					foreach(Attribute attr in info.GetCustomAttributes(false))
 					{
 						if(attr is JsonIgnore)
 						{

@@ -119,7 +119,7 @@ namespace Test
             A a = new A();
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            for (int i = 0; i < 10000; ++i)
+            for (int i = 0; i < 20000; ++i)
             {
                 JsonValue value = JsonReader.Read(a);
                 String json = JsonWriter.Write(value);
