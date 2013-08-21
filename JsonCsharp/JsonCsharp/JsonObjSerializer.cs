@@ -7,8 +7,11 @@ namespace JsonCsharp
 {
 	class JsonObjSerializer
 	{
-		internal JsonObjSerializer ()
+        private bool ignoreAttribute;
+
+		internal JsonObjSerializer (bool ignoreAttribute)
 		{
+            this.ignoreAttribute = ignoreAttribute;
 		}
 		
 		internal object ConvertToObject (Type type, JsonValue obj)
@@ -81,26 +84,36 @@ namespace JsonCsharp
 				foreach (PropertyInfo info in type.GetProperties()) {
 					if(!info.CanWrite)
 						continue;
-                    if (info.IsDefined(typeof(JsonIgnore), false))
-                        continue;
-                    attrs = info.GetCustomAttributes(typeof(JsonName), false);
-                    if (attrs != null && attrs.Length > 0)
-                        name = ((JsonName)attrs[0]).GetName();
-                    else
+                    if (ignoreAttribute)
                         name = info.Name;
+                    else
+                    {
+                        if (info.IsDefined(typeof(JsonIgnore), false))
+                            continue;
+                        attrs = info.GetCustomAttributes(typeof(JsonName), false);
+                        if (attrs != null && attrs.Length > 0)
+                            name = ((JsonName)attrs[0]).GetName();
+                        else
+                            name = info.Name;
+                    }
 					if (obj.IsMember (name))
 						info.SetValue (result, WriteObject (info.PropertyType, obj [name]), null);
 				}
 				foreach (FieldInfo info in type.GetFields()) {
 					if(!info.IsPublic || info.IsLiteral)
 						continue;
-                    if (info.IsDefined(typeof(JsonIgnore), false))
-                        continue;
-                    attrs = info.GetCustomAttributes(typeof(JsonName), false);
-                    if (attrs != null && attrs.Length > 0)
-                        name = ((JsonName)attrs[0]).GetName();
-                    else
+                    if (ignoreAttribute)
                         name = info.Name;
+                    else
+                    {
+                        if (info.IsDefined(typeof(JsonIgnore), false))
+                            continue;
+                        attrs = info.GetCustomAttributes(typeof(JsonName), false);
+                        if (attrs != null && attrs.Length > 0)
+                            name = ((JsonName)attrs[0]).GetName();
+                        else
+                            name = info.Name;
+                    }
 					if (obj.IsMember (name))	
 						info.SetValue (result, WriteObject (info.FieldType, obj [name]));
 				}

@@ -7,10 +7,10 @@ namespace JsonCsharp
 		{
 			return new JsonParser (json).Decode ();
 		}
-		
-		public static JsonValue Read (object obj)
+
+        public static JsonValue ReadObject(object obj, bool ignoreAttribute)
 		{
-			return new JsonObjParser (obj).Decode ();
+            return new JsonObjParser(obj, ignoreAttribute).Decode();
 		}
 	}
 }

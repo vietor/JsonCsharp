@@ -13,15 +13,10 @@ namespace JsonCsharp
         {
             return new JsonSerializer(false, false).ConvertToJSON(obj);
         }
-		
-        public static object Write(Type type, JsonValue obj)
+
+        public static T WriteObject<T>(JsonValue obj, bool ignoreAttribute)
         {
-            return new JsonObjSerializer().ConvertToObject(type, obj);
-        }
-		
-        public static T Write<T>(JsonValue obj)
-        {
-            return (T)Write(typeof(T), obj);
+            return (T)new JsonObjSerializer(ignoreAttribute).ConvertToObject(typeof(T), obj);
         }
     }
 }

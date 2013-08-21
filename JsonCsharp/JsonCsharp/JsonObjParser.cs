@@ -7,10 +7,12 @@ namespace JsonCsharp
 	class JsonObjParser
 	{		
 		private object root;
+        private bool ignoreAttribute;
 		
-		internal JsonObjParser (object obj)
+		internal JsonObjParser (object obj, bool ignoreAttribute)
 		{
 			this.root = obj;
+            this.ignoreAttribute = ignoreAttribute;
 		}
 
 		internal JsonValue Decode ()
@@ -82,13 +84,18 @@ namespace JsonCsharp
 				{
 					if(!info.CanRead)
 						continue;
-                    if (info.IsDefined(typeof(JsonIgnore), false))
-                        continue;
-					attrs = info.GetCustomAttributes(typeof(JsonName), false);
-                    if(attrs != null && attrs.Length > 0)
-                        name = ((JsonName)attrs[0]).GetName();
-                    else
+                    if (ignoreAttribute)
                         name = info.Name;
+                    else
+                    {
+                        if (info.IsDefined(typeof(JsonIgnore), false))
+                            continue;
+                        attrs = info.GetCustomAttributes(typeof(JsonName), false);
+                        if (attrs != null && attrs.Length > 0)
+                            name = ((JsonName)attrs[0]).GetName();
+                        else
+                            name = info.Name;
+                    }
 					child = ParseValue (info.GetValue(obj, null));
 					if (child != null)
 						result [name] = child;
@@ -96,13 +103,18 @@ namespace JsonCsharp
 				foreach (FieldInfo info in type.GetFields()) {
 					if(!info.IsPublic || info.IsLiteral)
 						continue;
-                    if (info.IsDefined(typeof(JsonIgnore), false))
-                        continue;
-                    attrs = info.GetCustomAttributes(typeof(JsonName), false);
-                    if (attrs != null && attrs.Length > 0)
-                        name = ((JsonName)attrs[0]).GetName();
-                    else
+                    if (ignoreAttribute)
                         name = info.Name;
+                    else
+                    {
+                        if (info.IsDefined(typeof(JsonIgnore), false))
+                            continue;
+                        attrs = info.GetCustomAttributes(typeof(JsonName), false);
+                        if (attrs != null && attrs.Length > 0)
+                            name = ((JsonName)attrs[0]).GetName();
+                        else
+                            name = info.Name;
+                    }
 					child = ParseValue (info.GetValue (obj));
 					if (child != null)
 						result [name] = child;

@@ -81,7 +81,7 @@ namespace Test
 			A a = new A ();	
 			a.a = 11;
 			a.B = 22;
-			value = JsonReader.Read (a);
+			value = JsonReader.ReadObject (a, false);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 			
@@ -90,7 +90,7 @@ namespace Test
 			Console.WriteLine (json);
 			
 			Console.WriteLine ("== Json to Object ==");
-			a = JsonWriter.Write<A>(value);
+			a = JsonWriter.WriteObject<A>(value, false);
 			a.a = 33;
 			a.B = 44;
 			a.c = C.CA;
@@ -99,7 +99,7 @@ namespace Test
 			a.tttt1 = new List<TA>();
 			a.TQ = 0;
 			a.TQ1 = 999999;
-			value = JsonReader.Read (a);
+            value = JsonReader.ReadObject(a, false);
 			json = JsonWriter.Write (value);
 			Console.WriteLine (json);
 						
@@ -117,12 +117,13 @@ namespace Test
         static void Test2()
         {
             A a = new A();
+            bool ignoreAttribute = true;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            for (int i = 0; i < 20000; ++i)
+            for (int i = 0; i < 10000; ++i)
             {
-                JsonValue value = JsonReader.Read(a);
-                String json = JsonWriter.Write(value);
+                String json = JsonMapper.ToJson(a, ignoreAttribute);
+                A b = JsonMapper.ToObject<A>(json, ignoreAttribute);
             }
             sw.Stop();
 
@@ -131,7 +132,7 @@ namespace Test
 
         static void Main(string[] args)
         {
-            Test2();
+            Test1();
 
             Console.ReadKey();
         }
