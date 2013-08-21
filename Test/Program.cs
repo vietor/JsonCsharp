@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using JsonCsharp;
 
@@ -64,7 +65,7 @@ namespace Test
 			}
 		};
 		
-		static void Main (string[] args)
+		static void Test1()
 		{
 			Console.WriteLine ("== Basic ==");
 			JsonValue value = new JsonValue ();
@@ -111,5 +112,28 @@ namespace Test
 
             Console.ReadKey();
 		}
+
+
+        static void Test2()
+        {
+            A a = new A();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            for (int i = 0; i < 10000; ++i)
+            {
+                JsonValue value = JsonReader.Read(a);
+                String json = JsonWriter.Write(value);
+            }
+            sw.Stop();
+
+            Console.WriteLine(String.Format("times: {0}ms", sw.ElapsedMilliseconds));
+        }
+
+        static void Main(string[] args)
+        {
+            Test2();
+
+            Console.ReadKey();
+        }
 	}
 }
