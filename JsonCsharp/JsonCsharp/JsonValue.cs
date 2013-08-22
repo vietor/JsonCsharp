@@ -26,7 +26,7 @@ namespace JsonCsharp
 		internal bool IsZero()
 		{
             if (IsNumberic())
-                return Convert.ToUInt64(store) == 0;
+                return Convert.ToDouble(store) == 0.0f;
 			return false;
 		}
 
@@ -152,7 +152,7 @@ namespace JsonCsharp
             if (IsBoolean())
                 value = (bool)store;
             else if (IsString())
-                value = bool.Parse((string)store);
+                value = Convert.ToBoolean((string)store);
             else
                 throw new Exception("JsonValue cannot convert to a bool");
             return value;
@@ -161,10 +161,8 @@ namespace JsonCsharp
         public int AsInt()
         {
             int value = 0;
-            if (IsNumberic())
+            if (IsNumberic() || IsString())
                 value = Convert.ToInt32(store);
-            else if (IsString())
-                value = int.Parse((string)store);
             else
                 throw new Exception("JsonValue cannot convert to a int");
             return value;
@@ -173,10 +171,8 @@ namespace JsonCsharp
         public uint AsUInt()
         {
             uint value = 0;
-            if (IsNumberic())
+            if (IsNumberic() || IsString())
                 value = Convert.ToUInt32(store);
-            else if (IsString())
-                value = uint.Parse((string)store);
             else
                 throw new Exception("JsonValue cannot convert to a uint");
             return value;
@@ -185,10 +181,8 @@ namespace JsonCsharp
         public long AsLong()
         {
             long value = 0;
-            if (IsNumberic())
+            if (IsNumberic() || IsString())
                 value = Convert.ToInt64(store);
-            else if (IsString())
-                value = long.Parse((string)store);
             else
                 throw new Exception("JsonValue cannot convert to a long");
             return value;
@@ -197,10 +191,8 @@ namespace JsonCsharp
         public ulong AsULong()
         {
             ulong value = 0;
-            if (IsNumberic())
+            if (IsNumberic() || IsString())
                 value = Convert.ToUInt64(store);
-            else if (IsString())
-                value = ulong.Parse((string)store);
             else
                 throw new Exception("JsonValue cannot convert to a ulong");
             return value;
@@ -209,10 +201,8 @@ namespace JsonCsharp
         public double AsDouble()
         {
             double value = 0;
-            if (IsNumberic())
+            if (IsNumberic() || IsString())
                 value = Convert.ToDouble(store);
-            else if (IsString())
-                value = double.Parse((string)store);
             else
                 throw new Exception("JsonValue cannot convert to a double");
             return value;

@@ -18,6 +18,11 @@ namespace Test
 		{
 			public int c = 100;
 			public uint d = 1000;
+            public long e = -10000000;
+            public ulong f = 30000000000;
+            public bool g = true;
+            public double h = 0.0f;
+            public double i = 0.000000001f;
 		}
 
 		class A
