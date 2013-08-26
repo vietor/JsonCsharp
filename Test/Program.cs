@@ -79,8 +79,11 @@ namespace Test
 			value ["ids"].Append (value ["id"]);
 			value.RemoveMember ("id");
 			value["ttt"] = null;
-			string json = JsonWriter.Write (value);
+            string json = JsonMapper.ToJson(value);
 			Console.WriteLine (json);
+            value = JsonMapper.ToValue(json);
+            json = JsonMapper.ToJson(value);
+            Console.WriteLine(json);
 			
 			Console.WriteLine ("== Object to Json ==");
 			A a = new A ();	

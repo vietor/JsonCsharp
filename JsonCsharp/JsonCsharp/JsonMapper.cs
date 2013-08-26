@@ -3,6 +3,11 @@ namespace JsonCsharp
 {
     public class JsonMapper
     {
+        public static JsonValue ToValue(string json)
+        {
+            return JsonReader.Read(json);
+        }
+
         public static T ToObject<T>(string json, bool ignoreAttribute = true)
         {
             return JsonWriter.WriteObject<T>(JsonReader.Read(json), ignoreAttribute);
