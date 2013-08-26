@@ -3,33 +3,42 @@ namespace JsonCsharp
 {
     public class JsonMapper
     {
-        public static JsonValue ToValue(string json)
+        public static JsonValue ToValue(object obj, bool ignoreAttribute = true)
         {
-            return JsonReader.Read(json);
+            if (obj is string)
+                return new JsonParser((string)obj).Decode();
+            else
+                return new JsonObjParser(obj, ignoreAttribute).Decode();
         }
 
         public static T ToObject<T>(string json, bool ignoreAttribute = true)
         {
-            return JsonWriter.WriteObject<T>(JsonReader.Read(json), ignoreAttribute);
+            return ToObject<T>(ToValue(json), ignoreAttribute);
         }
 
         public static T ToObject<T>(JsonValue value, bool ignoreAttribute = true)
         {
-            return JsonWriter.WriteObject<T>(value, ignoreAttribute);
+            return (T)new JsonObjSerializer(ignoreAttribute).ConvertToObject(typeof(T), value);
         }
 
         public static string ToJson(object obj, bool ignoreAttribute = true)
         {
+            JsonValue value;
             if (obj is JsonValue)
-                return JsonWriter.Write((JsonValue)obj);
-            return JsonWriter.Write(JsonReader.ReadObject(obj, ignoreAttribute));
+                value = (JsonValue)obj;
+            else
+                value = ToValue(obj, ignoreAttribute);
+            return new JsonSerializer(true, true).ConvertToJSON(value);
         }
 
         public static string ToJsonShrink(object obj, bool ignoreAttribute = true)
         {
+            JsonValue value;
             if (obj is JsonValue)
-                return JsonWriter.WriteShrink((JsonValue)obj);
-            return JsonWriter.WriteShrink(JsonReader.ReadObject(obj, ignoreAttribute));
+                value = (JsonValue)obj;
+            else
+                value = ToValue(obj, ignoreAttribute);
+            return new JsonSerializer(false, false).ConvertToJSON(value);
         }
     }
 }

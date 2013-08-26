@@ -38,9 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonCsharp\JsonMapper.cs" />
-    <Compile Include="JsonCsharp\JsonReader.cs" />
     <Compile Include="JsonCsharp\JsonValue.cs" />
-    <Compile Include="JsonCsharp\JsonWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonCsharp\JsonParser.cs" />
     <Compile Include="JsonCsharp\JsonType.cs" />
