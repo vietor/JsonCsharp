@@ -14,7 +14,47 @@ namespace JsonCsharp
             store = null;
         }
 
+        public JsonValue(bool value)
+        {
+            init(JsonType.Boolean, value);
+        }
+
+        public JsonValue(int value)
+        {
+            init(JsonType.Int, value);
+        }
+
+        public JsonValue(uint value)
+        {
+            init(JsonType.UInt, value);
+        }
+
+        public JsonValue(long value)
+        {
+            init(JsonType.Long, value);
+        }
+
+        public JsonValue(ulong value)
+        {
+            init(JsonType.ULong, value);
+        }
+
+        public JsonValue(double value)
+        {
+            init(JsonType.Double, value);
+        }
+
+        public JsonValue(string value)
+        {
+            init(JsonType.String, value);
+        }
+
         internal JsonValue(JsonType type, object obj)
+        {
+            init(type, obj);
+        }
+
+        private void init(JsonType type, object obj)
         {
             this.type = type;
             if (this.type == JsonType.Array && obj == null)
@@ -22,13 +62,13 @@ namespace JsonCsharp
             else
                 this.store = obj;
         }
-		
-		internal bool IsZero()
-		{
+
+        internal bool IsZero()
+        {
             if (IsNumberic())
                 return Convert.ToDouble(store) == 0.0f;
-			return false;
-		}
+            return false;
+        }
 
         public void Clear()
         {
@@ -65,7 +105,7 @@ namespace JsonCsharp
 
             set
             {
-                if(value == null)
+                if (value == null)
                     value = new JsonValue(JsonType.Null, null);
                 EnsureObject().Add(name, value);
             }
@@ -119,16 +159,16 @@ namespace JsonCsharp
 
         public JsonValue Append(JsonValue value)
         {
-            if(value != null)
-            	EnsureArray().Add(value);
+            if (value != null)
+                EnsureArray().Add(value);
             return this;
         }
-        
+
         public bool IsNull()
         {
             return type == JsonType.Null || type == JsonType.None;
         }
-	
+
         public bool IsBoolean()
         {
             return type == JsonType.Boolean;
@@ -211,41 +251,6 @@ namespace JsonCsharp
         public string AsString()
         {
             return IsString() ? (string)store : Convert.ToString(store);
-        }
-
-        public static implicit operator JsonValue(bool value)
-        {
-            return new JsonValue(JsonType.Boolean, value);
-        }
-
-        public static implicit operator JsonValue(int value)
-        {
-            return new JsonValue(JsonType.Int, value);
-        }
-
-        public static implicit operator JsonValue(uint value)
-        {
-            return new JsonValue(JsonType.UInt, value);
-        }
-
-        public static implicit operator JsonValue(long value)
-        {
-            return new JsonValue(JsonType.Long, value);
-        }
-
-        public static implicit operator JsonValue(ulong value)
-        {
-            return new JsonValue(JsonType.ULong, value);
-        }
-
-        public static implicit operator JsonValue(double value)
-        {
-            return new JsonValue(JsonType.Double, value);
-        }
-
-        public static implicit operator JsonValue(string value)
-        {
-            return new JsonValue(JsonType.String, value);
         }
 
     }

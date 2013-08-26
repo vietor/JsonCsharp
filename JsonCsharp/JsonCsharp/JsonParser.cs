@@ -112,7 +112,7 @@ namespace JsonCsharp
                     return ParseNumber();
 
                 case Token.String:
-                    return (JsonValue)ParseString();
+                    return new JsonValue(ParseString());
 
                 case Token.Curly_Open:
                     return ParseObject();
@@ -122,11 +122,10 @@ namespace JsonCsharp
 
                 case Token.True:
                     ConsumeToken();
-                    return (JsonValue)true;
-
+                    return new JsonValue(true);
                 case Token.False:
                     ConsumeToken();
-                    return (JsonValue)false;
+                    return new JsonValue(false);
 
                 case Token.Null:
                     ConsumeToken();
@@ -280,7 +279,7 @@ namespace JsonCsharp
             {
                 double value_double;
                 if (double.TryParse(number, out value_double))
-                    result = (JsonValue)value_double;
+                    result = new JsonValue(value_double);
             }
             if (result == null)
             {
@@ -288,17 +287,17 @@ namespace JsonCsharp
                 {
                     long value_long;
                     if (long.TryParse(number, out value_long))
-                        result = (JsonValue)value_long;
+                        result = new JsonValue(value_long);
                 }
                 else
                 {
                     ulong value_ulong;
                     if (ulong.TryParse(number, out value_ulong))
-                        result = (JsonValue)value_ulong;
+                        result = new JsonValue(value_ulong);
                 }
             }
             if (result == null)
-                result = (JsonValue)0;
+                result = new JsonValue(0);
             return result;
         }
 

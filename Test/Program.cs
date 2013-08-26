@@ -74,7 +74,7 @@ namespace Test
 		{
 			Console.WriteLine ("== Basic ==");
 			JsonValue value = new JsonValue ();
-			value ["id"] = (JsonValue)"32";
+			value ["id"] = new JsonValue("32");
 			value ["ids"].Append (value ["id"]);
 			value ["ids"].Append (value ["id"]);
 			value.RemoveMember ("id");
